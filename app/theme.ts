@@ -14,6 +14,11 @@ const config = {
 		heading: "var(--font-merryweather)",
 		body: "var(--font-merryweather)",
 	},
+	colors: {
+		primary: {
+			100: "#406EB5",
+		},
+	},
 };
 
 const customTheme = extendTheme(config);
