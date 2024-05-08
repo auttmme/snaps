@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PostsProps } from "../types/Posts";
+import { PostsProps } from "../../types/Posts";
 
 export const getPosts = async (page: number, per_page: number) => {
 	try {
