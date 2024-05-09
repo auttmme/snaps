@@ -23,7 +23,7 @@ export default function RootLayout({
 			<body>
 				<Providers>
 					<Navbar />
-					<Box mx={{ base: 16, md: 36 }} mt={28} mb={8}>
+					<Box mx={{ base: 8, md: 16, lg: 24, xl: 36 }} mt={28} mb={12}>
 						{children}
 					</Box>
 				</Providers>

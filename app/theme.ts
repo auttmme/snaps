@@ -19,6 +19,9 @@ const config = {
 			50: "#F7FAFC",
 			100: "#406EB5",
 		},
+		gray: {
+			200: "#EAEEF3",
+		},
 	},
 };
 
