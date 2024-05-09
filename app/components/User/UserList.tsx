@@ -27,8 +27,11 @@ import {
 	faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { color } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 function UserList() {
+	const route = useRouter();
+
 	const { data: users } = useQuery({
 		queryKey: ["GetUsers", 1, 20],
 		queryFn: () => getUsers(1, 20),
@@ -98,6 +101,7 @@ function UserList() {
 														height="24px"
 													/>
 												}
+												onClick={() => route.push(`/user/${user.id}`)}
 											>
 												View
 											</MenuItem>
