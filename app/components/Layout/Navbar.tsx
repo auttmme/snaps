@@ -51,7 +51,7 @@ function Navbar() {
 				<Flex
 					justifyContent="space-between"
 					alignItems={"center"}
-					px={{ base: 16, md: 36 }}
+					px={{ base: 8, md: 16, lg: 24, xl: 36 }}
 					py={6}
 					display={["none", "none", "flex", "flex"]}
 				>
@@ -99,7 +99,7 @@ function Navbar() {
 					display={["grid", "grid", "none", "none"]}
 					gridTemplateColumns={"auto 1fr"}
 					placeItems={"center"}
-					px={{ base: 16, md: 36 }}
+					px={{ base: 8, md: 16, lg: 24, xl: 36 }}
 					py={6}
 				>
 					<HamburgerIcon width="24px" height="24px" onClick={onOpen} />
