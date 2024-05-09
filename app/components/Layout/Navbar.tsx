@@ -80,7 +80,7 @@ function Navbar() {
 							)}
 						</Link>
 						<Link href={"/user"}>
-							{pathName === "/user" ? (
+							{pathName === "/user" || pathName.includes("user") ? (
 								<ActiveLink menu="User" />
 							) : (
 								<Text

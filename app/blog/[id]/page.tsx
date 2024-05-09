@@ -18,9 +18,9 @@ function Page({ params }: { params: { id: string } }) {
 	});
 
 	return (
-		<Box width={"80%"}>
+		<Box width={["100%", "100%", "80%", "80%"]}>
 			<Stack gap={4}>
-				<Text fontSize={"4xl"} fontWeight={"700"}>
+				<Text fontSize={["2xl", "xl", "4xl", "4xl"]} fontWeight={"700"}>
 					{data?.title}
 				</Text>
 				<Text lineHeight="7">{data?.body}</Text>
