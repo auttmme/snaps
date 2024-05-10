@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useState } from "react";
 import UserList from "../components/User/UserList";
 import {
 	Button,
@@ -13,8 +13,31 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 
 import Link from "next/link";
+import UserPagination from "../components/User/UserPagination";
 
 function Page() {
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const handleNextPage = useCallback(() => {
+		if (currentPage === 5) {
+			return;
+		}
+		setCurrentPage((a) => a + 1);
+	}, [currentPage]);
+
+	const handlePrevPage = useCallback(() => {
+		if (currentPage === 1) {
+			return;
+		}
+		setCurrentPage((a) => a - 1);
+	}, [currentPage]);
+
+	const handleClickPage = useCallback((page?: number) => {
+		if (page) {
+			setCurrentPage(page ?? 1);
+		}
+	}, []);
+
 	return (
 		<Stack gap={8}>
 			<Flex justifyContent="space-between">
@@ -42,7 +65,13 @@ function Page() {
 					</Button>
 				</Link>
 			</Flex>
-			<UserList />;
+			<UserList currentPage={currentPage} />;
+			<UserPagination
+				currentPage={currentPage}
+				handleClickPage={handleClickPage}
+				handleNextPage={handleNextPage}
+				handlePrevPage={handlePrevPage}
+			/>
 		</Stack>
 	);
 }

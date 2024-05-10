@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, IconButton } from "@chakra-ui/react";
+import { Button, Flex, IconButton } from "@chakra-ui/react";
 import React from "react";
 
 interface PaginationProps {
@@ -9,7 +9,7 @@ interface PaginationProps {
 	handlePrevPage: () => void;
 }
 
-function Pagination({
+function BlogPagination({
 	currentPage,
 	handleClickPage,
 	handleNextPage,
@@ -40,6 +40,11 @@ function Pagination({
 						color={currentPage === page ? "white" : "gray.800"}
 						borderColor={"gray.300"}
 						onClick={() => handleChangePage(page)}
+						_hover={{
+							bgColor: "transparent",
+							color: "gray.800",
+							borderColor: "primary.100",
+						}}
 					>
 						{page}
 					</Button>
@@ -57,4 +62,4 @@ function Pagination({
 	);
 }
 
-export default Pagination;
+export default BlogPagination;
