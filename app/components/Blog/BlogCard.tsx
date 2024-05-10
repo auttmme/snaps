@@ -7,7 +7,7 @@ function BlogCard({ title, body, id }: BlogDetailProps) {
 	return (
 		<Link href={`/blog/${id}`}>
 			<Card
-				variant="outline"
+				variant="elevated"
 				_hover={{ bg: "primary.100", color: "white", transition: "0.3s" }}
 			>
 				<CardHeader>
