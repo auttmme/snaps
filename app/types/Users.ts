@@ -12,3 +12,5 @@ export interface AddUserProps {
 	gender: string;
 	status: string;
 }
+
+export type EditUserProps = AddUserProps;
