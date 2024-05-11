@@ -32,7 +32,6 @@ export default function Home() {
 
 	const handleClickPage = useCallback((page?: number) => {
 		if (page) {
-			console.log("page", page);
 			setCurrentPage(page ?? 1);
 		}
 	}, []);
