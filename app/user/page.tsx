@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import UserList from "../components/User/UserList";
 import {
 	Button,
@@ -15,8 +15,30 @@ import { SearchIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 import UserPagination from "../components/User/UserPagination";
 
+import { UsersProps } from "../types/Users";
+import { UserListContext } from "../UserListContext";
+
 function Page() {
+	const users = useContext(UserListContext);
+
 	const [currentPage, setCurrentPage] = useState(1);
+	const [searchUser, setSearchUser] = useState("");
+	const [searchResult, setSearchResult] = useState<UsersProps[]>([]);
+	let searchTimeout: NodeJS.Timeout;
+
+	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchUser(e.target.value);
+
+		clearTimeout(searchTimeout);
+		searchTimeout = setTimeout(() => {
+			const result = users?.filter((user) =>
+				user.name.toLocaleLowerCase().includes(searchUser)
+			);
+			if (result) {
+				setSearchResult(result);
+			}
+		}, 300);
+	};
 
 	const handleNextPage = useCallback(() => {
 		if (currentPage === 5) {
@@ -46,16 +68,18 @@ function Page() {
 						<SearchIcon />
 					</InputLeftElement>
 					<Input
-						placeholder="Seacrh user"
-						width={"30%"}
+						placeholder="Search user"
+						width={{ base: "100%", md: "50%", lg: "30%" }}
 						variant="filled"
 						bgColor={"white"}
 						shadow={"lg"}
 						_hover={{ bgColor: "transparent" }}
+						onChange={(e) => handleSearch(e)}
 					/>
 				</InputGroup>
 				<Link href={"/new-user"}>
 					<Button
+						display={{ base: "none", md: "flex" }}
 						bgColor="primary.100"
 						color="white"
 						shadow="lg"
@@ -65,13 +89,20 @@ function Page() {
 					</Button>
 				</Link>
 			</Flex>
-			<UserList currentPage={currentPage} />;
-			<UserPagination
+			<UserList
+				searchUser={searchUser}
+				searchResult={searchResult}
 				currentPage={currentPage}
-				handleClickPage={handleClickPage}
-				handleNextPage={handleNextPage}
-				handlePrevPage={handlePrevPage}
 			/>
+			;
+			{searchUser.length < 1 && (
+				<UserPagination
+					currentPage={currentPage}
+					handleClickPage={handleClickPage}
+					handleNextPage={handleNextPage}
+					handlePrevPage={handlePrevPage}
+				/>
+			)}
 		</Stack>
 	);
 }
