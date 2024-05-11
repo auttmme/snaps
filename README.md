@@ -11,7 +11,7 @@ Ensure that you have Node.js version 18.17 or later installed on your system.
 Begin by cloning this repository to your local machine. You can do this by executing the following command in your terminal:
 
 ```
-git clone <repository-url>
+git clone https://github.com/auttmme/snaps.git
 ```
 
 ## Get GoREST Access Token
@@ -29,7 +29,7 @@ Before starting the project, it's necessary to set up environment variables. Fol
  NEXT_PUBLIC_API_KEY= [your access token]
 ```
 
-Access token is needed for request methods such as `PUT`, `POST`, and `DELETE`. Access Token will be passed with **Authorizatio** header as Bearer token.
+Access token is needed for request methods such as `PUT`, `POST`, and `DELETE`. Access Token will be passed with **Authorization** header as Bearer token.
 
 ## Installing Dependencies
 
