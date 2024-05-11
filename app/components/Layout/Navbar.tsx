@@ -1,6 +1,11 @@
 "use client";
 
 import {
+	Accordion,
+	AccordionButton,
+	AccordionIcon,
+	AccordionItem,
+	AccordionPanel,
 	Box,
 	Drawer,
 	DrawerCloseButton,
@@ -58,10 +63,12 @@ function Navbar() {
 					<Box display={["none", "none", "block", "block"]}>
 						<Link href={"/"}>
 							<Image
-								src="/snaps_logo.png"
+								src="/images/snaps_logo.png"
 								alt="Logo snaps"
-								width="150"
-								height="150"
+								width={0}
+								height={0}
+								style={{ width: "150px", height: "auto" }}
+								priority
 							/>
 						</Link>
 					</Box>
@@ -104,10 +111,12 @@ function Navbar() {
 				>
 					<HamburgerIcon width="24px" height="24px" onClick={onOpen} />
 					<Image
-						src="/snaps_logo.png"
+						src="/images/snaps_logo.png"
 						alt="Logo snaps"
-						width="150"
-						height="150"
+						width={0}
+						height={0}
+						style={{ width: "150px", height: "auto" }}
+						priority
 					/>
 				</Grid>
 			</Box>
@@ -117,10 +126,12 @@ function Navbar() {
 					<DrawerHeader>
 						<Link href={"/"} onClick={onClose}>
 							<Image
-								src="/snaps_logo.png"
+								src="/images/snaps_logo.png"
 								alt="Logo snaps"
-								width="150"
-								height="150"
+								width={0}
+								height={0}
+								style={{ width: "150px", height: "auto" }}
+								priority
 							/>
 						</Link>
 						<DrawerCloseButton />
@@ -129,9 +140,28 @@ function Navbar() {
 						<Link href="/" onClick={onClose}>
 							<Text fontSize={"lg"}>Blog</Text>
 						</Link>
-						<Link href="/user" onClick={onClose}>
-							<Text fontSize={"lg"}>User</Text>
-						</Link>
+						<Accordion allowMultiple>
+							<AccordionItem>
+								<Text>
+									<AccordionButton px={0}>
+										<Text fontSize={"lg"} flex="1" textAlign="left">
+											User
+										</Text>
+										<AccordionIcon />
+									</AccordionButton>
+								</Text>
+								<AccordionPanel>
+									<Stack gap={4}>
+										<Link href="/user" onClick={onClose}>
+											<Text fontSize={"lg"}>User List</Text>
+										</Link>
+										<Link href="/new-user" onClick={onClose}>
+											<Text fontSize={"lg"}>Add New User</Text>
+										</Link>
+									</Stack>
+								</AccordionPanel>
+							</AccordionItem>
+						</Accordion>
 					</Stack>
 				</DrawerContent>
 			</Drawer>

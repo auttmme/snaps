@@ -27,8 +27,12 @@ import {
 	Button,
 	useToast,
 	Flex,
+	Alert,
+	AlertIcon,
+	Grid,
+	GridItem,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { use, useMemo, useState } from "react";
 import { getUsers } from "../../api/User/getUserList";
 import { useMutation, useQuery } from "react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,7 +47,15 @@ import { deleteUser } from "../../api/User/deleteUser";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import UserListSkeleton from "./UserListSkeleton";
 
-function UserList({ currentPage }: { currentPage: number }) {
+function UserList({
+	currentPage,
+	searchUser,
+	searchResult,
+}: {
+	currentPage: number;
+	searchUser?: string;
+	searchResult?: UsersProps[];
+}) {
 	const route = useRouter();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const toast = useToast();
@@ -58,6 +70,14 @@ function UserList({ currentPage }: { currentPage: number }) {
 	});
 
 	const [selectedUser, setSelectedUser] = useState<UsersProps>();
+
+	const tableData = useMemo(() => {
+		if (searchUser && (searchResult?.length ?? 0 > 0)) {
+			return searchResult;
+		} else if (searchUser) {
+			return null;
+		} else return users;
+	}, [searchResult, searchUser, users]);
 
 	const mutation = useMutation({
 		mutationFn: deleteUser,
@@ -112,82 +132,93 @@ function UserList({ currentPage }: { currentPage: number }) {
 								<Th textAlign="center">Action</Th>
 							</Tr>
 						</Thead>
-						<Tbody>
-							{users?.map((user, index) => (
-								<Tr key={user.id}>
-									<Td textAlign="center">
-										{index + 1 + (currentPage - 1) * 20}
-									</Td>
-									<Td textAlign="center">{user.name}</Td>
-									<Td textAlign="center">{user.email}</Td>
-									<Td textAlign="center">
-										<Box
-											bgColor={user.gender === "male" ? "#ADD8E6" : "pink"}
-											p={1}
-											height="auto"
-											rounded="24px"
+						{tableData ? (
+							<Tbody>
+								{tableData?.map((user, index) => (
+									<Tr key={user.id}>
+										<Td textAlign="center">
+											{index + 1 + (currentPage - 1) * 20}
+										</Td>
+										<Td textAlign="center">{user.name}</Td>
+										<Td textAlign="center">{user.email}</Td>
+										<Td textAlign="center">
+											<Box
+												bgColor={user.gender === "male" ? "#ADD8E6" : "pink"}
+												p={1}
+												height="auto"
+												rounded="24px"
+											>
+												<Text>{user.gender}</Text>
+											</Box>
+										</Td>
+										<Td
+											textAlign="center"
+											color={user.status === "active" ? "green" : "red"}
 										>
-											<Text>{user.gender}</Text>
-										</Box>
-									</Td>
-									<Td
-										textAlign="center"
-										color={user.status === "active" ? "green" : "red"}
-									>
-										{user.status}
-									</Td>
-									<Td textAlign="center">
-										<Menu>
-											<MenuButton
-												as={IconButton}
-												aria-label="Options"
-												icon={
-													<FontAwesomeIcon
-														icon={faEllipsisVertical}
-														color="#1A202C"
-													/>
-												}
-												variant="ghost"
-												isRound
-											/>
-											<MenuList rounded="12px" minW={"0"} width="160px">
-												<Stack gap="2">
-													<MenuItem
-														icon={
-															<FontAwesomeIcon
-																icon={faEye}
-																color="black"
-																width="24px"
-																height="24px"
-															/>
-														}
-														onClick={() => route.push(`/user/${user.id}`)}
-													>
-														View
-													</MenuItem>
-													<MenuItem
-														icon={
-															<FontAwesomeIcon
-																icon={faTrashCan}
-																color="black"
-																width="24px"
-																height="24px"
-															/>
-														}
-														onClick={() => {
-															setSelectedUser(user);
-															onOpen();
-														}}
-													>
-														Delete
-													</MenuItem>
-												</Stack>
-											</MenuList>
-										</Menu>
-									</Td>
-								</Tr>
-							))}
-						</Tbody>
+											{user.status}
+										</Td>
+										<Td textAlign="center">
+											<Menu>
+												<MenuButton
+													as={IconButton}
+													aria-label="Options"
+													icon={
+														<FontAwesomeIcon
+															icon={faEllipsisVertical}
+															color="#1A202C"
+														/>
+													}
+													variant="ghost"
+													isRound
+												/>
+												<MenuList rounded="12px" minW={"0"} width="160px">
+													<Stack gap="2">
+														<MenuItem
+															icon={
+																<FontAwesomeIcon
+																	icon={faEye}
+																	color="black"
+																	width="24px"
+																	height="24px"
+																/>
+															}
+															onClick={() => route.push(`/user/${user.id}`)}
+														>
+															View
+														</MenuItem>
+														<MenuItem
+															icon={
+																<FontAwesomeIcon
+																	icon={faTrashCan}
+																	color="black"
+																	width="24px"
+																	height="24px"
+																/>
+															}
+															onClick={() => {
+																setSelectedUser(user);
+																onOpen();
+															}}
+														>
+															Delete
+														</MenuItem>
+													</Stack>
+												</MenuList>
+											</Menu>
+										</Td>
+									</Tr>
+								))}
+							</Tbody>
+						) : (
+							<Tbody>
+								<Box as="td" colSpan={6}>
+									<Alert status="info">
+										<AlertIcon />
+										No Data Found
+									</Alert>
+								</Box>
+							</Tbody>
+						)}
 					</Table>
 				</TableContainer>
 			)}

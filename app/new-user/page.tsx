@@ -58,7 +58,6 @@ function Page() {
 	});
 
 	const onSubmit: SubmitHandler<AddUserProps> = (data) => {
-		console.log("data baru", data);
 		mutation.mutate(data);
 		reset();
 	};

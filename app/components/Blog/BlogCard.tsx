@@ -13,7 +13,7 @@ function BlogCard({ title, body, id }: BlogDetailProps) {
 				<CardHeader>
 					<Heading size="md">{title}</Heading>
 					<CardBody px={0}>
-						<Text>{body}</Text>
+						<Text noOfLines={4}>{body}</Text>
 					</CardBody>
 				</CardHeader>
 			</Card>
